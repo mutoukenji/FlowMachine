@@ -19,6 +19,12 @@ import java.util.Map;
 public class FlowMachine<T, E> implements Branch.BranchCallback<T, E>, Join.JoinCallback<T, E> {
     private T initStateId;
     private Map<T, State<T, E>> stateMap = new HashMap<>();
+    private Logger logger = new LogcatLogger();
+
+    public FlowMachine<T, E> logger(Logger logger) {
+        this.logger = logger;
+        return this;
+    }
 
     public FlowMachine<T, E> initState(State<T, E> state) {
         initStateId = state.getId();
@@ -41,6 +47,7 @@ public class FlowMachine<T, E> implements Branch.BranchCallback<T, E>, Join.Join
         for (State<T, E> state : stateMap.values()) {
             if (state.isActive()) {
                 state.event(event);
+                logger.v("FM", state.id+"下触发"+event.id+"事件");
                 T nextState = state.getForward(event.getId());
                 if (nextState != null) {
                     goNext(state, nextState);
@@ -53,6 +60,7 @@ public class FlowMachine<T, E> implements Branch.BranchCallback<T, E>, Join.Join
         State<T, E> st = stateMap.get(initStateId);
         if (st != null) {
             st.entry();
+            logger.v("FM", "进入"+st.id);
         }
     }
 
@@ -60,6 +68,7 @@ public class FlowMachine<T, E> implements Branch.BranchCallback<T, E>, Join.Join
         for (State<T, E> state : stateMap.values()) {
             if (state.isActive()) {
                 state.exit();
+                logger.v("FM", "离开"+state.id);
             }
         }
     }
@@ -67,10 +76,12 @@ public class FlowMachine<T, E> implements Branch.BranchCallback<T, E>, Join.Join
     @Override
     public void goNext(State<T, E> currentState, List<T> states) {
         currentState.exit();
+        logger.v("FM", "离开"+currentState.id);
         for (T state : states) {
             State<T, E> st = stateMap.get(state);
             if (st != null) {
                 st.entry();
+                logger.v("FM", "进入"+state);
             }
         }
     }
@@ -78,9 +89,11 @@ public class FlowMachine<T, E> implements Branch.BranchCallback<T, E>, Join.Join
     @Override
     public void goNext(State<T, E> currentState, T state) {
         currentState.exit();
+        logger.v("FM", "离开"+currentState.id);
         State<T, E> st = stateMap.get(state);
         if (st != null) {
             st.entry();
+            logger.v("FM", "进入"+state);
         }
     }
 }

@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/mutoukenji/FlowMachine'
     gitUrl = 'https://github.com/mutoukenji/FlowMachine.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.2'
 
     developerId = 'mutoukenji'
     developerName = 'MutouKenji'
@@ -57,5 +57,5 @@ tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'installv1.gradle'
+apply from: 'bintrayv1.gradle'
