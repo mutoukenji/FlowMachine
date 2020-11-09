@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tech.yaog.utils.logadapter.LogcatLogger;
+import tech.yaog.utils.logadapter.Logger;
+
 /**
  * 流式控制器.
  *

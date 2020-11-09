@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/mutoukenji/FlowMachine'
     gitUrl = 'https://github.com/mutoukenji/FlowMachine.git'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.0.3'
 
     developerId = 'mutoukenji'
     developerName = 'MutouKenji'
@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation 'tech.yaog.utils:log-adapter:1.0.0'
 }
 
 tasks.withType(JavaCompile) {
